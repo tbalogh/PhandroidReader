@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Phandroid reader</string>
+    <string name="internet_connection_error">No connection</string>
+    <string name="loading">loading</string>
+    <string name="no_matching_category">No matching category</string>
+    <string name="requestTimeout">Server did not respond</string>
+    <string name="seen">seen</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="title_toolbar">Feed</string>
+</resources>
