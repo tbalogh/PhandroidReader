@@ -1,1 +1,1 @@
-# Simple rss client for phandroid.com
+# Simple Rss client for phandroid.com
