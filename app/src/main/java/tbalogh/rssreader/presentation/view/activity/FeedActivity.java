@@ -42,6 +42,7 @@ import tbalogh.rssreader.presentation.view.util.LocalizedStringProvider;
 public class FeedActivity extends AppCompatActivity implements FeedView, OnFeedItemClickedListener {
 
     public static final String RETRY = "Retry";
+    private static final java.lang.String CATEGORY_KEY = "category";
 
     @BindView(R.id.layout_root)         View               rootLayout;
     @BindView(R.id.layout_swipe_reresh) SwipeRefreshLayout swipeRefreshLayout;
@@ -70,6 +71,21 @@ public class FeedActivity extends AppCompatActivity implements FeedView, OnFeedI
         initializeInjector();
         this.feedComponent.inject(this);
         setupViews();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString(CATEGORY_KEY, this.category);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        this.category = savedInstanceState.getString(CATEGORY_KEY);
+        if (this.category != null && !this.category.isEmpty()) {
+            this.searchEditText.setText(this.category);
+        }
     }
 
     @Override
