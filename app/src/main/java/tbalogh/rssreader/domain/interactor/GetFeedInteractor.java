@@ -13,7 +13,7 @@ import tbalogh.rssreader.domain.repository.FeedRepository;
 
 public class GetFeedInteractor extends Interactor {
 
-    public static final int TIMEOUT = 1000;
+    public static final int TIMEOUT = 5000;
 
     private final FeedRepository repository;
     private       String         category;
