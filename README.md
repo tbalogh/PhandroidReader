@@ -1,1 +1,1 @@
-# RssReader
+# Simple rss client for phandroid.com
