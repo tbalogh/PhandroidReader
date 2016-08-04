@@ -43,6 +43,14 @@ public class FeedPresenterTest extends AndroidTestCase {
         verify(mockGetFeedInteractor).execute(any(Subscriber.class));
     }
 
+    public void testFilterFeed() {
+        feedPresenter.filterFeed(anyString());
+
+        verify(mockFeedView).showLoading();
+        verify(mockFilterFeedInteractor).setCategory(anyString());
+        verify(mockFilterFeedInteractor).execute(any(Subscriber.class));
+    }
+
 
     private void initMocks() {
         mockFeedView = mock(FeedView.class);
