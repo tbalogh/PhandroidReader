@@ -2,16 +2,16 @@ package tbalogh.rssreader.presentation.presenter;
 
 import android.test.AndroidTestCase;
 
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
+import rx.Subscriber;
 import tbalogh.rssreader.domain.interactor.FilterFeedInteractor;
 import tbalogh.rssreader.domain.interactor.GetFeedInteractor;
 import tbalogh.rssreader.presentation.mapper.FeedModelMapper;
 import tbalogh.rssreader.presentation.view.FeedView;
 import tbalogh.rssreader.presentation.view.presenter.FeedPresenter;
 
-import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 /**
@@ -19,27 +19,35 @@ import static org.mockito.Mockito.verify;
  */
 public class FeedPresenterTest extends AndroidTestCase {
 
-    @Mock private FeedView             mockFeedView;
-    @Mock private GetFeedInteractor    mockGetFeedInteractor;
-    @Mock private FilterFeedInteractor mockFilterFeedInteractor;
-    @Mock private FeedModelMapper      mockFeedModelMapper;
+    private FeedView             mockFeedView;
+    private GetFeedInteractor    mockGetFeedInteractor;
+    private FilterFeedInteractor mockFilterFeedInteractor;
+    private FeedModelMapper      mockFeedModelMapper;
 
     private FeedPresenter feedPresenter;
 
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        MockitoAnnotations.initMocks(this);
+        initMocks();
         feedPresenter = new FeedPresenter(mockGetFeedInteractor, mockFilterFeedInteractor,
                 mockFeedModelMapper);
         feedPresenter.setFeedView(mockFeedView);
     }
 
-    public void testOnResume() {
-        given(mockFeedView.getFilterTag()).willReturn("");
-        feedPresenter.onResume();
+    public void testGetFeed() {
+        feedPresenter.getFeed(anyString());
 
         verify(mockFeedView).showLoading();
-        verify(mockFeedView).hideLoading();
+        verify(mockGetFeedInteractor).setCategory(anyString());
+        verify(mockGetFeedInteractor).execute(any(Subscriber.class));
+    }
+
+
+    private void initMocks() {
+        mockFeedView = mock(FeedView.class);
+        mockGetFeedInteractor = mock(GetFeedInteractor.class);
+        mockFilterFeedInteractor = mock(FilterFeedInteractor.class);
+        mockFeedModelMapper = mock(FeedModelMapper.class);
     }
 }
